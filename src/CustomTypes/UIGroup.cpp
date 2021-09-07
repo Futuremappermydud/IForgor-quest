@@ -17,7 +17,7 @@ DEFINE_TYPE(IForgor, UIGroup);
 
 void IForgor::UIGroup::Initialize()
 {
-	pauseUIInstance = Resources::FindObjectsOfTypeAll<IForgor::PauseUIManager*>()->values[0];
+	pauseUIInstance = Resources::FindObjectsOfTypeAll<IForgor::PauseUIManager*>()->get(0);
 	getLogger().info("%p", pauseUIInstance);
 	getLogger().info("%p", pauseUIInstance->spr_bloq);
     getLogger().info("%p", pauseUIInstance->spr_dot);

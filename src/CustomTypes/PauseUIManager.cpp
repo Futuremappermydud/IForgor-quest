@@ -32,9 +32,9 @@ void IForgor::PauseUIManager::CreateUIElements()
 	spr_saber_bg = QuestUI::BeatSaberUI::Base64ToSprite(spr_saber_bg_base64);
 	spr_saber_fg = QuestUI::BeatSaberUI::Base64ToSprite(spr_saber_fg_base64);
 	if (_colorScheme == nullptr)
-		_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()->values[0]->sceneSetupData->colorScheme;
+		_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()->get(0)->sceneSetupData->colorScheme;
     if (_pauseCanvasTransform == nullptr)
-		_pauseCanvasTransform = Resources::FindObjectsOfTypeAll<PauseMenuManager*>()->values[0]->get_transform()->Find(createcsstr("Wrapper"))->Find(createcsstr("MenuWrapper"))->Find(createcsstr("Canvas"))->get_transform();
+		_pauseCanvasTransform = Resources::FindObjectsOfTypeAll<PauseMenuManager*>()->get(0)->get_transform()->Find(createcsstr("Wrapper"))->Find(createcsstr("MenuWrapper"))->Find(createcsstr("Canvas"))->get_transform();
 
 	Sprite* spr_RoundRect10 = _pauseCanvasTransform->Find(createcsstr("MainBar"))->Find(createcsstr("LevelBarSimple"))->Find(createcsstr("BG"))->GetComponent<HMUI::ImageView*>()->get_sprite();
 	mat_UINoGlow = QuestUI::ArrayUtil::First(Resources::FindObjectsOfTypeAll<Material*>(), [](Material* x) { return to_utf8(csstrtostr(x->get_name())) == "UINoGlow"; });
@@ -72,7 +72,7 @@ void IForgor::PauseUIManager::CreateUIElements()
 
 void IForgor::PauseUIManager::OnPause()
 {
-	//_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()->values[0]->sceneSetupData->colorScheme;
+	//_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()->get(0)->sceneSetupData->colorScheme;
     if (noteRecorderInstance->noteAData != nullptr) {
 		if (_groupANullified && _colorScheme != nullptr) {
 			groupA->SetNoteColor(_colorScheme->get_saberAColor());

@@ -17,7 +17,7 @@ void IForgor::SaberRecorder::Init()
 
 void IForgor::SaberRecorder::Start() 
 {
-    auto sabManager = Resources::FindObjectsOfTypeAll<SaberManager*>()->values[0];
+    auto sabManager = Resources::FindObjectsOfTypeAll<SaberManager*>()->get(0);
     _saberA = sabManager->leftSaber;
     _saberB = sabManager->rightSaber;
 }

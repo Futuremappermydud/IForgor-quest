@@ -6,7 +6,7 @@ if (-not ($PSVersionTable.PSEdition -eq "Core")) {
     $buildScript += ".cmd"
 }
 
-$ArchiveName = "IForgor_v0.1.0.qmod"
+$ArchiveName = "IForgor.qmod"
 $TempArchiveName = "IForgor_v0.1.0.qmod.zip"
 
 & $buildScript NDK_PROJECT_PATH=$PSScriptRoot APP_BUILD_SCRIPT=$PSScriptRoot/Android.mk NDK_APPLICATION_MK=$PSScriptRoot/Application.mk
