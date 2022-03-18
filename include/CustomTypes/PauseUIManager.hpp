@@ -15,8 +15,10 @@ DECLARE_CLASS_CODEGEN(IForgor, PauseUIManager, UnityEngine::MonoBehaviour,
     DECLARE_INSTANCE_FIELD(bool, _groupANullified);
     DECLARE_INSTANCE_FIELD(bool, _groupBNullified);
     DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_bloq);
+    DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_slider_bloq);
     DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_arrow);
     DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_dot);
+    DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_slider_dot);
     DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_cut_arrow);
     DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_saber_bg);
     DECLARE_INSTANCE_FIELD(UnityEngine::Sprite*, spr_saber_fg);

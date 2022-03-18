@@ -6,11 +6,12 @@
     "author": "Ckosmic, ported by FutureMapper",
     "version": "0.1.1",
     "packageId": "com.beatgames.beatsaber",
-    "packageVersion": "1.17.0",
+    "packageVersion": "1.20.0",
     "description": "I Forgor 💀",
     "modFiles": [
         "libIForgor.so"
     ],
     "libraryFiles": [
+	    "libbeatsaber-hook_3_6_8.so"
     ]
 }

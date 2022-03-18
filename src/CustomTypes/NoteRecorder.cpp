@@ -14,7 +14,15 @@ void IForgor::NoteRecorder::Start()
 
 void IForgor::NoteRecorder::OnNoteWasCut(GlobalNamespace::NoteData* noteData, GlobalNamespace::NoteCutInfo noteCutInfo) 
 {
-    ProcessNote(noteData, noteCutInfo);
+	if (noteData == nullptr || noteData->colorType == ColorType::None) return;
+	if (!noteCutInfo.saberTypeOK)
+	{
+		ProcessNote(noteData, nullptr);
+	}
+	else
+	{
+		ProcessNote(noteData, noteCutInfo);
+	}
 }
 
 void IForgor::NoteRecorder::OnNoteWasMissed(GlobalNamespace::NoteData* noteData) 
@@ -23,15 +31,14 @@ void IForgor::NoteRecorder::OnNoteWasMissed(GlobalNamespace::NoteData* noteData)
 }
 void IForgor::NoteRecorder::ProcessNote(GlobalNamespace::NoteData* noteData, GlobalNamespace::NoteCutInfo noteCutInfo) 
 {
-    if (noteData != nullptr) 
-    {
-			if (noteData->colorType == ColorType::ColorA)
-				noteAData = noteData;
-			else if (noteData->colorType == ColorType::ColorB)
-				noteBData = noteData;
-	}
-	if (noteData->colorType == ColorType::ColorA)
+    if (noteData->colorType == ColorType::ColorA)
+	{
+		noteAData = noteData;
 		noteACutInfo = noteCutInfo;
+	}
 	else if (noteData->colorType == ColorType::ColorB)
+	{
+		noteBData = noteData;
 		noteBCutInfo = noteCutInfo;
+	}
 }

@@ -10,6 +10,10 @@
 #include "HMUI/ImageView.hpp"
 #include "questui/shared/BeatSaberUI.hpp"
 #include "Sprites.hpp"
+#ifdef CHROMA
+#include "conditional-dependencies/shared/main.hpp"
+#include "chroma/shared/SaberAPI.hpp"
+#endif
 using namespace GlobalNamespace;
 using namespace UnityEngine;
 using namespace UnityEngine::UI;
@@ -26,24 +30,26 @@ void IForgor::PauseUIManager::OnEnable()
 void IForgor::PauseUIManager::CreateUIElements()
 {
 	spr_bloq = QuestUI::BeatSaberUI::Base64ToSprite(spr_bloq_base64);
+	spr_slider_bloq = QuestUI::BeatSaberUI::Base64ToSprite(spr_slider_bloq_base64);
 	spr_arrow = QuestUI::BeatSaberUI::Base64ToSprite(spr_arrow_base64);
 	spr_dot = QuestUI::BeatSaberUI::Base64ToSprite(spr_dot_base64);
+	spr_slider_dot = QuestUI::BeatSaberUI::Base64ToSprite(spr_slider_dot_base64);
 	spr_cut_arrow = QuestUI::BeatSaberUI::Base64ToSprite(spr_cut_arrow_base64);
 	spr_saber_bg = QuestUI::BeatSaberUI::Base64ToSprite(spr_saber_bg_base64);
 	spr_saber_fg = QuestUI::BeatSaberUI::Base64ToSprite(spr_saber_fg_base64);
 	if (_colorScheme == nullptr)
-		_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()->get(0)->sceneSetupData->colorScheme;
+		_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()[0]->sceneSetupData->colorScheme;
     if (_pauseCanvasTransform == nullptr)
-		_pauseCanvasTransform = Resources::FindObjectsOfTypeAll<PauseMenuManager*>()->get(0)->get_transform()->Find(createcsstr("Wrapper"))->Find(createcsstr("MenuWrapper"))->Find(createcsstr("Canvas"))->get_transform();
+		_pauseCanvasTransform = Resources::FindObjectsOfTypeAll<PauseMenuManager*>()[0]->get_transform()->Find(newcsstr("Wrapper"))->Find(newcsstr("MenuWrapper"))->Find(newcsstr("Canvas"))->get_transform();
 
-	Sprite* spr_RoundRect10 = _pauseCanvasTransform->Find(createcsstr("MainBar"))->Find(createcsstr("LevelBarSimple"))->Find(createcsstr("BG"))->GetComponent<HMUI::ImageView*>()->get_sprite();
+	Sprite* spr_RoundRect10 = _pauseCanvasTransform->Find(newcsstr("MainBar"))->Find(newcsstr("LevelBarSimple"))->Find(newcsstr("BG"))->GetComponent<HMUI::ImageView*>()->get_sprite();
 	mat_UINoGlow = QuestUI::ArrayUtil::First(Resources::FindObjectsOfTypeAll<Material*>(), [](Material* x) { return to_utf8(csstrtostr(x->get_name())) == "UINoGlow"; });
-	RectTransform* uiContainer = GameObject::New_ctor(createcsstr("IFUIContainer"))->AddComponent<RectTransform*>();
+	RectTransform* uiContainer = GameObject::New_ctor(newcsstr("IFUIContainer"))->AddComponent<RectTransform*>();
 	uiContainer->SetParent(_pauseCanvasTransform, false);
 	uiContainer->set_localScale(Vector3::get_one());
 	uiContainer->set_localPosition(Vector3::get_zero());
 	uiContainer->set_sizeDelta(Vector2(3.0f, 10.0f));
-	HMUI::ImageView* background = GameObject::New_ctor(createcsstr("IFUIBackground"))->AddComponent<HMUI::ImageView*>();
+	HMUI::ImageView* background = GameObject::New_ctor(newcsstr("IFUIBackground"))->AddComponent<HMUI::ImageView*>();
 	background->get_transform()->SetParent(uiContainer->get_transform(), false);
 	background->get_rectTransform()->set_localScale(Vector3(1.0f, 1.0f, 1.0f));
 	background->get_rectTransform()->set_localPosition(Vector3(0.0f, 14.0f, 0.0f));
@@ -54,8 +60,8 @@ void IForgor::PauseUIManager::CreateUIElements()
 	background->set_material(mat_UINoGlow);
     background->skew = 0.18f;
 	background->SetAllDirty();
-	groupA = GameObject::New_ctor(createcsstr("IFUIBloq_TypeA"))->AddComponent<UIGroup*>();
-	groupB = GameObject::New_ctor(createcsstr("IFUIBloq_TypeB"))->AddComponent<UIGroup*>();
+	groupA = GameObject::New_ctor(newcsstr("IFUIBloq_TypeA"))->AddComponent<UIGroup*>();
+	groupB = GameObject::New_ctor(newcsstr("IFUIBloq_TypeB"))->AddComponent<UIGroup*>();
 	groupA->Initialize();
 	groupB->Initialize();
 	groupA->SetNoteColor(_colorScheme->get_saberAColor());
@@ -72,10 +78,29 @@ void IForgor::PauseUIManager::CreateUIElements()
 
 void IForgor::PauseUIManager::OnPause()
 {
-	//_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()->get(0)->sceneSetupData->colorScheme;
+	#ifdef CHROMA
+	static auto getColors = CondDeps::Find<Chroma::SaberAPI::ColorOptPair>("chroma", "getGlobalSabersColorSafe");
+	#endif
+	auto leftColor = _colorScheme->get_saberAColor();
+	auto rightColor = _colorScheme->get_saberBColor();
+	#ifdef CHROMA
+	if(getColors.has_value()) 
+	{
+		Chroma::SaberAPI::ColorOptPair colors = getColors.value()();
+		bool isLeftColorChroma = colors.first.isSet;
+		bool isRightColorChroma = colors.second.isSet;
+
+		auto leftColorChroma = colors.first.getColor();
+		auto rightColorChroma = colors.second.getColor();
+
+		leftColor = isLeftColorChroma ? leftColorChroma : leftColor;
+		rightColor = isRightColorChroma ? rightColorChroma : rightColor;
+	}
+	#endif
+
     if (noteRecorderInstance->noteAData != nullptr) {
 		if (_groupANullified && _colorScheme != nullptr) {
-			groupA->SetNoteColor(_colorScheme->get_saberAColor());
+			groupA->SetNoteColor(leftColor);
 		}
 		_groupANullified = false;
 		groupA->SetNoteData(noteRecorderInstance->noteAData, this);
@@ -87,7 +112,7 @@ void IForgor::PauseUIManager::OnPause()
 	}
 	if (noteRecorderInstance->noteBData != nullptr) {
 		if (_groupBNullified && _colorScheme != nullptr) {
-			groupB->SetNoteColor(_colorScheme->get_saberBColor());
+			groupB->SetNoteColor(rightColor);
 		}
 		_groupBNullified = false;
 		groupB->SetNoteData(noteRecorderInstance->noteBData, this);

@@ -2,16 +2,21 @@
   "sharedDir": "shared",
   "dependenciesDir": "extern",
   "info": {
-    "name": "I Forgor",
-    "id": "IForgor",
-    "version": "0.1.0",
+    "name": "IForgor",
+    "id": "iforgor",
+    "version": "0.2.0",
     "url": null,
     "additionalData": {}
   },
   "dependencies": [
     {
-      "id": "beatsaber-hook",
+      "id": "modloader",
       "versionRange": "*",
+      "additionalData": {}
+    },
+    {
+      "id": "beatsaber-hook",
+      "versionRange": "=3.6.8",
       "additionalData": {
         "extraFiles": [
           "src/inline-hook"
@@ -19,18 +24,23 @@
       }
     },
     {
-      "id": "custom-types",
-      "versionRange": "*",
-      "additionalData": {}
-    },
-    {
       "id": "codegen",
-      "versionRange": "*",
+      "versionRange": "^0.21.0",
       "additionalData": {}
     },
     {
       "id": "questui",
       "versionRange": "*",
+      "additionalData": {}
+    },
+    {
+      "id": "sombrero",
+      "versionRange": "*",
+      "additionalData": {}
+    },
+    {
+      "id": "custom-types",
+      "versionRange": "^0.15.8",
       "additionalData": {}
     }
   ],

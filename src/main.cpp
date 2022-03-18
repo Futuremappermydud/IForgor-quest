@@ -36,19 +36,11 @@ Logger& getLogger() {
     return *logger;
 }
 
-extern "C" void setup(ModInfo& info) {
-    info.id = ID;
-    info.version = VERSION;
-    modInfo = info;
-	
-    getConfig().Load();
-}
-
 MAKE_HOOK_MATCH(GameSongController_StartSong, &GameSongController::StartSong, void, GameSongController* self, float songTimeOffset) {
     GameSongController_StartSong(self, songTimeOffset);
-    IForgor::SaberRecorder* s = GameObject::New_ctor(il2cpp_utils::createcsstr("IFSaberRecorder"))->AddComponent<IForgor::SaberRecorder*>();
-	IForgor::NoteRecorder* n = GameObject::New_ctor(il2cpp_utils::createcsstr("IFNoteRecorder"))->AddComponent<IForgor::NoteRecorder*>();
-	IForgor::PauseUIManager* p = GameObject::New_ctor(il2cpp_utils::createcsstr("IFPauseUIManager"))->AddComponent<IForgor::PauseUIManager*>();
+    IForgor::SaberRecorder* s = GameObject::New_ctor(il2cpp_utils::newcsstr("IFSaberRecorder"))->AddComponent<IForgor::SaberRecorder*>();
+	IForgor::NoteRecorder* n = GameObject::New_ctor(il2cpp_utils::newcsstr("IFNoteRecorder"))->AddComponent<IForgor::NoteRecorder*>();
+	IForgor::PauseUIManager* p = GameObject::New_ctor(il2cpp_utils::newcsstr("IFPauseUIManager"))->AddComponent<IForgor::PauseUIManager*>();
 
     pauseUIInstance = p;
     saberRecorderInstance = s;
@@ -78,14 +70,22 @@ MAKE_HOOK_MATCH(GamePause_Pause, &GamePause::Pause, void, GamePause* self) {
     pauseUIInstance->OnPause();
 }
 
+extern "C" void setup(ModInfo& info) {
+    info.id = MOD_ID;
+    info.version = VERSION;
+    modInfo = info;
+	
+    getConfig().Load();
+}
+
 extern "C" void load() {
     il2cpp_functions::Init();
 
     INSTALL_HOOK(getLogger(), GameSongController_StartSong);
     INSTALL_HOOK(getLogger(), ScoreController_HandleNoteWasCut);
-	INSTALL_HOOK(getLogger(), ScoreController_HandleNoteWasMissed);
+    INSTALL_HOOK(getLogger(), ScoreController_HandleNoteWasMissed);
     INSTALL_HOOK(getLogger(), GamePause_Resume);
-	INSTALL_HOOK(getLogger(), GamePause_Pause);
+    INSTALL_HOOK(getLogger(), GamePause_Pause);
 
-	custom_types::Register::AutoRegister();
+    custom_types::Register::AutoRegister();
 }

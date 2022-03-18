@@ -37,6 +37,8 @@
 
 # NDK stuff
 out/
+build/
+extern/
 [Ll]ib/
 [Ll]ibs/
 [Oo]bj/
@@ -47,3 +49,4 @@ ndkpath.txt
 extern/
 Android.mk.backup
 qpm.shared.json
+extern.cmake
