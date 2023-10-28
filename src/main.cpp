@@ -31,23 +31,25 @@ Configuration& getConfig() {
     return config;
 }
 
-Logger& getLogger() {
+Logger& getModLogger() {
     static Logger* logger = new Logger(modInfo);
     return *logger;
 }
 
 MAKE_HOOK_MATCH(GameSongController_StartSong, &GameSongController::StartSong, void, GameSongController* self, float songTimeOffset) {
     GameSongController_StartSong(self, songTimeOffset);
+    getModLogger().info("song start");
     IForgor::SaberRecorder* s = GameObject::New_ctor(il2cpp_utils::newcsstr("IFSaberRecorder"))->AddComponent<IForgor::SaberRecorder*>();
 	IForgor::NoteRecorder* n = GameObject::New_ctor(il2cpp_utils::newcsstr("IFNoteRecorder"))->AddComponent<IForgor::NoteRecorder*>();
+    getModLogger().info("song start bruh");
 	IForgor::PauseUIManager* p = GameObject::New_ctor(il2cpp_utils::newcsstr("IFPauseUIManager"))->AddComponent<IForgor::PauseUIManager*>();
 
     pauseUIInstance = p;
     saberRecorderInstance = s;
     noteRecorderInstance = n;
-    getLogger().info("%p", noteRecorderInstance);
-    getLogger().info("%p", saberRecorderInstance);
-    getLogger().info("%p", pauseUIInstance);
+    getModLogger().info("%p", noteRecorderInstance);
+    getModLogger().info("%p", saberRecorderInstance);
+    getModLogger().info("%p", pauseUIInstance);
 }
 
 MAKE_HOOK_MATCH(ScoreController_HandleNoteWasCut, &ScoreController::HandleNoteWasCut, void, ScoreController* self, GlobalNamespace::NoteController* noteController, ByRef<GlobalNamespace::NoteCutInfo> noteCutInfo) {
@@ -81,11 +83,11 @@ extern "C" void setup(ModInfo& info) {
 extern "C" void load() {
     il2cpp_functions::Init();
 
-    INSTALL_HOOK(getLogger(), GameSongController_StartSong);
-    INSTALL_HOOK(getLogger(), ScoreController_HandleNoteWasCut);
-    INSTALL_HOOK(getLogger(), ScoreController_HandleNoteWasMissed);
-    INSTALL_HOOK(getLogger(), GamePause_Resume);
-    INSTALL_HOOK(getLogger(), GamePause_Pause);
+    INSTALL_HOOK(getModLogger(), GameSongController_StartSong);
+    INSTALL_HOOK(getModLogger(), ScoreController_HandleNoteWasCut);
+    INSTALL_HOOK(getModLogger(), ScoreController_HandleNoteWasMissed);
+    INSTALL_HOOK(getModLogger(), GamePause_Resume);
+    INSTALL_HOOK(getModLogger(), GamePause_Pause);
 
     custom_types::Register::AutoRegister();
 }

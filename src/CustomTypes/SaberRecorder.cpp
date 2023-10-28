@@ -30,7 +30,7 @@ void IForgor::SaberRecorder::RecordSaberAngles()
 
 void IForgor::SaberRecorder::RecordSaberAngle(Saber* saber) 
 {
-    getLogger().info("%p", saber);
+    getModLogger().info("%p", saber);
     Vector3 saberVector = saber->get_saberBladeTopPos() - saber->get_saberBladeBottomPos();
 	saberVector.z = 0;
 	saberVector.Normalize();

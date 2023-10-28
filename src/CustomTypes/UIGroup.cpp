@@ -18,13 +18,13 @@ DEFINE_TYPE(IForgor, UIGroup);
 void IForgor::UIGroup::Initialize()
 {
 	pauseUIInstance = Resources::FindObjectsOfTypeAll<IForgor::PauseUIManager*>()[0];
-	getLogger().info("%p", pauseUIInstance);
-	getLogger().info("%p", pauseUIInstance->spr_bloq);
-    getLogger().info("%p", pauseUIInstance->spr_dot);
-    getLogger().info("%p", pauseUIInstance->spr_cut_arrow);
-	getLogger().info("%p", pauseUIInstance->spr_saber_bg);
-    getLogger().info("%p", pauseUIInstance->spr_saber_fg);
-    getLogger().info("%p", pauseUIInstance->spr_arrow);
+	getModLogger().info("%p", pauseUIInstance);
+	getModLogger().info("%p", pauseUIInstance->spr_bloq);
+    getModLogger().info("%p", pauseUIInstance->spr_dot);
+    getModLogger().info("%p", pauseUIInstance->spr_cut_arrow);
+	getModLogger().info("%p", pauseUIInstance->spr_saber_bg);
+    getModLogger().info("%p", pauseUIInstance->spr_saber_fg);
+    getModLogger().info("%p", pauseUIInstance->spr_arrow);
     bloqImage = GameObject::New_ctor(newcsstr("IFBloqImage"))->AddComponent<ImageView*>();
 	bloqImage->get_transform()->SetParent(get_transform(), false);
 	bloqImage->get_rectTransform()->set_localScale(Vector3::get_one() * 0.075f);

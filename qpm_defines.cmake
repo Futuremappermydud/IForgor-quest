@@ -1,11 +1,11 @@
 # YOU SHOULD NOT MANUALLY EDIT THIS FILE, QPM WILL VOID ALL CHANGES
 # Version defines, pretty useful
-set(MOD_VERSION "0.2.0")
+set(MOD_VERSION "1.0.0")
 # take the mod name and just remove spaces, that will be MOD_ID, if you don't like it change it after the include of this file
 set(MOD_ID "IForgor")
 
 # derived from override .so name or just id_version
-set(COMPILE_ID "iforgor_0_2_0")
+set(COMPILE_ID "snowy")
 # derived from whichever codegen package is installed, will default to just codegen
 set(CODEGEN_ID "codegen")
 
@@ -39,6 +39,7 @@ string(REPLACE "\\" "/" CMAKE_ANDROID_NDK ${CMAKE_ANDROID_NDK})
 set(ANDROID_PLATFORM 24)
 set(ANDROID_ABI arm64-v8a)
 set(ANDROID_STL c++_static)
+set(ANDROID_USE_LEGACY_TOOLCHAIN_FILE OFF)
 
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_ANDROID_NDK}/build/cmake/android.toolchain.cmake)
 # define used for external data, mostly just the qpm dependencies

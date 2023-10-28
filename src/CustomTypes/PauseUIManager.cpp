@@ -29,6 +29,7 @@ void IForgor::PauseUIManager::OnEnable()
 
 void IForgor::PauseUIManager::CreateUIElements()
 {
+	getModLogger().info("1");
 	spr_bloq = QuestUI::BeatSaberUI::Base64ToSprite(spr_bloq_base64);
 	spr_slider_bloq = QuestUI::BeatSaberUI::Base64ToSprite(spr_slider_bloq_base64);
 	spr_arrow = QuestUI::BeatSaberUI::Base64ToSprite(spr_arrow_base64);
@@ -40,7 +41,12 @@ void IForgor::PauseUIManager::CreateUIElements()
 	if (_colorScheme == nullptr)
 		_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()[0]->sceneSetupData->colorScheme;
     if (_pauseCanvasTransform == nullptr)
-		_pauseCanvasTransform = Resources::FindObjectsOfTypeAll<PauseMenuManager*>()[0]->get_transform()->Find(newcsstr("Wrapper"))->Find(newcsstr("MenuWrapper"))->Find(newcsstr("Canvas"))->get_transform();
+	{
+		PauseMenuManager* manager = Resources::FindObjectsOfTypeAll<PauseMenuManager*>()[0];
+		getModLogger().info("%p", manager);
+		_pauseCanvasTransform = manager->get_transform()->Find(newcsstr("Wrapper"))->Find(newcsstr("MenuWrapper"))->Find(newcsstr("Canvas"))->get_transform();
+	}
+	getModLogger().info("2");
 
 	Sprite* spr_RoundRect10 = _pauseCanvasTransform->Find(newcsstr("MainBar"))->Find(newcsstr("LevelBarSimple"))->Find(newcsstr("BG"))->GetComponent<HMUI::ImageView*>()->get_sprite();
 	mat_UINoGlow = QuestUI::ArrayUtil::First(Resources::FindObjectsOfTypeAll<Material*>(), [](Material* x) { return to_utf8(csstrtostr(x->get_name())) == "UINoGlow"; });
@@ -49,6 +55,8 @@ void IForgor::PauseUIManager::CreateUIElements()
 	uiContainer->set_localScale(Vector3::get_one());
 	uiContainer->set_localPosition(Vector3::get_zero());
 	uiContainer->set_sizeDelta(Vector2(3.0f, 10.0f));
+	getModLogger().info("3");
+
 	HMUI::ImageView* background = GameObject::New_ctor(newcsstr("IFUIBackground"))->AddComponent<HMUI::ImageView*>();
 	background->get_transform()->SetParent(uiContainer->get_transform(), false);
 	background->get_rectTransform()->set_localScale(Vector3(1.0f, 1.0f, 1.0f));
@@ -60,8 +68,12 @@ void IForgor::PauseUIManager::CreateUIElements()
 	background->set_material(mat_UINoGlow);
     background->skew = 0.18f;
 	background->SetAllDirty();
+	getModLogger().info("4");
+
 	groupA = GameObject::New_ctor(newcsstr("IFUIBloq_TypeA"))->AddComponent<UIGroup*>();
 	groupB = GameObject::New_ctor(newcsstr("IFUIBloq_TypeB"))->AddComponent<UIGroup*>();
+	getModLogger().info("5");
+
 	groupA->Initialize();
 	groupB->Initialize();
 	groupA->SetNoteColor(_colorScheme->get_saberAColor());
@@ -74,6 +86,8 @@ void IForgor::PauseUIManager::CreateUIElements()
 	groupB->get_transform()->SetParent(background->get_transform(), false);
 	groupA->get_transform()->set_localPosition(Vector3(-5.0f, 0.0f, 0.0f));
 	groupB->get_transform()->set_localPosition(Vector3(5.0f, 0.0f, 0.0f));
+	getModLogger().info("6");
+
 }
 
 void IForgor::PauseUIManager::OnPause()

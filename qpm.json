@@ -4,19 +4,22 @@
   "info": {
     "name": "IForgor",
     "id": "iforgor",
-    "version": "0.2.1",
+    "version": "1.0.0",
     "url": null,
-    "additionalData": {}
+    "additionalData": {
+      "overrideSoName": "libsnowy.so",
+      "cmake": true
+    }
   },
   "dependencies": [
     {
       "id": "modloader",
-      "versionRange": "*",
+      "versionRange": "=1.2.3",
       "additionalData": {}
     },
     {
       "id": "beatsaber-hook",
-      "versionRange": "^3.6.8",
+      "versionRange": "^3.8.0",
       "additionalData": {
         "extraFiles": [
           "src/inline-hook"
@@ -25,22 +28,22 @@
     },
     {
       "id": "codegen",
-      "versionRange": "^0.22.0",
+      "versionRange": "^0.33.0",
       "additionalData": {}
     },
     {
       "id": "questui",
-      "versionRange": "*",
+      "versionRange": "^0.17.12",
       "additionalData": {}
     },
     {
       "id": "sombrero",
-      "versionRange": "*",
+      "versionRange": "^0.1.37",
       "additionalData": {}
     },
     {
       "id": "custom-types",
-      "versionRange": "*",
+      "versionRange": "=0.15.24",
       "additionalData": {}
     }
   ],

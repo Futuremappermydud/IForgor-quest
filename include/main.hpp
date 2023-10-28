@@ -20,5 +20,5 @@
 
 // Define these functions here so that we can easily read configuration and log information from other files
 Configuration& getConfig();
-Logger& getLogger();
-//#define CHROMA
+Logger& getModLogger();
+#define CHROMA
