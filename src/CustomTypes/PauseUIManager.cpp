@@ -9,15 +9,11 @@
 #include "GlobalNamespace/GameplayCoreSceneSetupData.hpp"
 #include "HMUI/ImageView.hpp"
 #include "questui/shared/BeatSaberUI.hpp"
-#include "Sprites.hpp"
+#include "assets.hpp"
 #ifdef CHROMA
 #include "conditional-dependencies/shared/main.hpp"
 #include "chroma/shared/SaberAPI.hpp"
 #endif
-using namespace GlobalNamespace;
-using namespace UnityEngine;
-using namespace UnityEngine::UI;
-using namespace il2cpp_utils;
 
 DEFINE_TYPE(IForgor, PauseUIManager);
 
@@ -29,50 +25,44 @@ void IForgor::PauseUIManager::OnEnable()
 
 void IForgor::PauseUIManager::CreateUIElements()
 {
-	getModLogger().info("1");
-	spr_bloq = QuestUI::BeatSaberUI::Base64ToSprite(spr_bloq_base64);
-	spr_slider_bloq = QuestUI::BeatSaberUI::Base64ToSprite(spr_slider_bloq_base64);
-	spr_arrow = QuestUI::BeatSaberUI::Base64ToSprite(spr_arrow_base64);
-	spr_dot = QuestUI::BeatSaberUI::Base64ToSprite(spr_dot_base64);
-	spr_slider_dot = QuestUI::BeatSaberUI::Base64ToSprite(spr_slider_dot_base64);
-	spr_cut_arrow = QuestUI::BeatSaberUI::Base64ToSprite(spr_cut_arrow_base64);
-	spr_saber_bg = QuestUI::BeatSaberUI::Base64ToSprite(spr_saber_bg_base64);
-	spr_saber_fg = QuestUI::BeatSaberUI::Base64ToSprite(spr_saber_fg_base64);
+	spr_bloq = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::bloq_png);
+	spr_slider_bloq = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::slider_png);
+	spr_arrow = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::arrow_png);
+	spr_dot = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::dot_png);
+	spr_slider_dot = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::slider_dots_png);
+	spr_cut_arrow = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::cut_arrow_png);
+	spr_saber_bg = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::saber_bg_png);
+	spr_saber_fg = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::saber_fg_png);
 	if (_colorScheme == nullptr)
-		_colorScheme = Resources::FindObjectsOfTypeAll<GameplayCoreInstaller*>()[0]->sceneSetupData->colorScheme;
+		_colorScheme = UnityEngine::Resources::FindObjectsOfTypeAll<GlobalNamespace::GameplayCoreInstaller*>()[0]->sceneSetupData->colorScheme;
     if (_pauseCanvasTransform == nullptr)
 	{
-		PauseMenuManager* manager = Resources::FindObjectsOfTypeAll<PauseMenuManager*>()[0];
-		getModLogger().info("%p", manager);
-		_pauseCanvasTransform = manager->get_transform()->Find(newcsstr("Wrapper"))->Find(newcsstr("MenuWrapper"))->Find(newcsstr("Canvas"))->get_transform();
+		auto manager = UnityEngine::Resources::FindObjectsOfTypeAll<GlobalNamespace::PauseMenuManager*>()[0];
+		_pauseCanvasTransform = manager->get_transform()->Find("Wrapper")->Find("MenuWrapper")->Find("Canvas")->get_transform();
 	}
-	getModLogger().info("2");
 
-	Sprite* spr_RoundRect10 = _pauseCanvasTransform->Find(newcsstr("MainBar"))->Find(newcsstr("LevelBarSimple"))->Find(newcsstr("BG"))->GetComponent<HMUI::ImageView*>()->get_sprite();
-	mat_UINoGlow = QuestUI::ArrayUtil::First(Resources::FindObjectsOfTypeAll<Material*>(), [](Material* x) { return to_utf8(csstrtostr(x->get_name())) == "UINoGlow"; });
-	RectTransform* uiContainer = GameObject::New_ctor(newcsstr("IFUIContainer"))->AddComponent<RectTransform*>();
+	UnityEngine::Sprite* spr_RoundRect10 = _pauseCanvasTransform->Find("MainBar")->Find("LevelBarSimple")->Find("BG")->GetComponent<HMUI::ImageView*>()->get_sprite();
+	mat_UINoGlow = QuestUI::ArrayUtil::First(UnityEngine::Resources::FindObjectsOfTypeAll<UnityEngine::Material*>(), [](UnityEngine::Material* x) { return x->get_name() == "UINoGlow"; });
+	UnityEngine::RectTransform* uiContainer = UnityEngine::GameObject::New_ctor("IFUIContainer")->AddComponent<UnityEngine::RectTransform*>();
 	uiContainer->SetParent(_pauseCanvasTransform, false);
-	uiContainer->set_localScale(Vector3::get_one());
-	uiContainer->set_localPosition(Vector3::get_zero());
-	uiContainer->set_sizeDelta(Vector2(3.0f, 10.0f));
-	getModLogger().info("3");
+	uiContainer->set_localScale(UnityEngine::Vector3::get_one());
+	uiContainer->set_localPosition(UnityEngine::Vector3::get_zero());
+	uiContainer->set_sizeDelta(UnityEngine::Vector2(3.0f, 10.0f));
 
-	HMUI::ImageView* background = GameObject::New_ctor(newcsstr("IFUIBackground"))->AddComponent<HMUI::ImageView*>();
+	HMUI::ImageView* background = UnityEngine::GameObject::New_ctor("IFUIBackground")->AddComponent<HMUI::ImageView*>();
 	background->get_transform()->SetParent(uiContainer->get_transform(), false);
-	background->get_rectTransform()->set_localScale(Vector3(1.0f, 1.0f, 1.0f));
-	background->get_rectTransform()->set_localPosition(Vector3(0.0f, 14.0f, 0.0f));
-	background->get_rectTransform()->set_sizeDelta(Vector2(40.0f, 10.0f));
+	background->get_rectTransform()->set_localScale(UnityEngine::Vector3(1.0f, 1.0f, 1.0f));
+	background->get_rectTransform()->set_localPosition(UnityEngine::Vector3(0.0f, 14.0f, 0.0f));
+	background->get_rectTransform()->set_sizeDelta(UnityEngine::Vector2(40.0f, 10.0f));
 	background->set_sprite(spr_RoundRect10);
-	background->set_type(Image::Type::Sliced);
+	background->set_type(UnityEngine::UI::Image::Type::Sliced);
 	background->set_color(UnityEngine::Color(0.125f, 0.125f, 0.125f, 0.75f));
 	background->set_material(mat_UINoGlow);
     background->skew = 0.18f;
 	background->SetAllDirty();
-	getModLogger().info("4");
 
-	groupA = GameObject::New_ctor(newcsstr("IFUIBloq_TypeA"))->AddComponent<UIGroup*>();
-	groupB = GameObject::New_ctor(newcsstr("IFUIBloq_TypeB"))->AddComponent<UIGroup*>();
-	getModLogger().info("5");
+	groupA = UnityEngine::GameObject::New_ctor("IFUIBloq_TypeA")->AddComponent<UIGroup*>();
+	groupB = UnityEngine::GameObject::New_ctor("IFUIBloq_TypeB")->AddComponent<UIGroup*>();
 
 	groupA->Initialize();
 	groupB->Initialize();
@@ -84,9 +74,8 @@ void IForgor::PauseUIManager::CreateUIElements()
 	groupB->SetSaberXPosition(9.0f);
 	groupA->get_transform()->SetParent(background->get_transform(), false);
 	groupB->get_transform()->SetParent(background->get_transform(), false);
-	groupA->get_transform()->set_localPosition(Vector3(-5.0f, 0.0f, 0.0f));
-	groupB->get_transform()->set_localPosition(Vector3(5.0f, 0.0f, 0.0f));
-	getModLogger().info("6");
+	groupA->get_transform()->set_localPosition(UnityEngine::Vector3(-5.0f, 0.0f, 0.0f));
+	groupB->get_transform()->set_localPosition(UnityEngine::Vector3(5.0f, 0.0f, 0.0f));
 
 }
 
@@ -120,7 +109,7 @@ void IForgor::PauseUIManager::OnPause()
 		groupA->SetNoteData(noteRecorderInstance->noteAData, this);
 	} else {
 		if (_colorScheme != nullptr) {
-			groupA->SetNoteColor(Color::get_gray());
+			groupA->SetNoteColor(UnityEngine::Color::get_gray());
 		}
 		_groupANullified = true;
 	}
@@ -132,7 +121,7 @@ void IForgor::PauseUIManager::OnPause()
 		groupB->SetNoteData(noteRecorderInstance->noteBData, this);
 	} else {
 		if (_colorScheme != nullptr) {
-			groupB->SetNoteColor(Color::get_gray());
+			groupB->SetNoteColor(UnityEngine::Color::get_gray());
 		}
 		_groupBNullified = true;
 	}

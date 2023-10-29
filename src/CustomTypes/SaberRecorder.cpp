@@ -2,9 +2,6 @@
 #include "UnityEngine/Resources.hpp"
 #include "GlobalNamespace/SaberManager.hpp"
 
-using namespace GlobalNamespace;
-using namespace UnityEngine;
-
 DEFINE_TYPE(IForgor, SaberRecorder);
 
 void IForgor::SaberRecorder::Init() 
@@ -17,7 +14,7 @@ void IForgor::SaberRecorder::Init()
 
 void IForgor::SaberRecorder::Start() 
 {
-    auto sabManager = Resources::FindObjectsOfTypeAll<SaberManager*>()[0];
+    auto sabManager = UnityEngine::Resources::FindObjectsOfTypeAll<GlobalNamespace::SaberManager*>()[0];
     _saberA = sabManager->leftSaber;
     _saberB = sabManager->rightSaber;
 }
@@ -28,13 +25,12 @@ void IForgor::SaberRecorder::RecordSaberAngles()
     RecordSaberAngle(_saberB);
 }
 
-void IForgor::SaberRecorder::RecordSaberAngle(Saber* saber) 
+void IForgor::SaberRecorder::RecordSaberAngle(GlobalNamespace::Saber* saber) 
 {
-    getModLogger().info("%p", saber);
-    Vector3 saberVector = saber->get_saberBladeTopPos() - saber->get_saberBladeBottomPos();
+    auto saberVector = saber->get_saberBladeTopPos() - saber->get_saberBladeBottomPos();
 	saberVector.z = 0;
 	saberVector.Normalize();
-	float saberAngle = Mathf::Atan2(saberVector.y, saberVector.x) * 57.29578f;
-    if(saber->get_saberType() == SaberType::SaberA) saberAAngle = saberAngle;
-    if(saber->get_saberType() == SaberType::SaberB) saberBAngle = saberAngle;
+	float saberAngle = UnityEngine::Mathf::Atan2(saberVector.y, saberVector.x) * 57.29578f;
+    if(saber->get_saberType() == GlobalNamespace::SaberType::SaberA) saberAAngle = saberAngle;
+    if(saber->get_saberType() == GlobalNamespace::SaberType::SaberB) saberBAngle = saberAngle;
 }

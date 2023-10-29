@@ -7,7 +7,7 @@
 #include "UnityEngine/Color.hpp"
 #include "GlobalNamespace/NoteData.hpp"
 #include "GlobalNamespace/NoteCutInfo.hpp"
-#include "Sprites.hpp"
+#include "assets.hpp"
 #include "questui/shared/BeatSaberUI.hpp"
 
 DECLARE_CLASS_CODEGEN(IForgor, UIGroup, UnityEngine::MonoBehaviour,

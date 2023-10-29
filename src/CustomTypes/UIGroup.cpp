@@ -7,64 +7,53 @@
 #include "UnityEngine/UI/Image.hpp"
 #include "HMUI/ImageView.hpp"
 #include "main.hpp"
-using namespace GlobalNamespace;
-using namespace HMUI;
-using il2cpp_utils::newcsstr;
-using namespace UnityEngine;
-using namespace UnityEngine::UI;
+
 
 DEFINE_TYPE(IForgor, UIGroup);
 
 void IForgor::UIGroup::Initialize()
 {
-	pauseUIInstance = Resources::FindObjectsOfTypeAll<IForgor::PauseUIManager*>()[0];
-	getModLogger().info("%p", pauseUIInstance);
-	getModLogger().info("%p", pauseUIInstance->spr_bloq);
-    getModLogger().info("%p", pauseUIInstance->spr_dot);
-    getModLogger().info("%p", pauseUIInstance->spr_cut_arrow);
-	getModLogger().info("%p", pauseUIInstance->spr_saber_bg);
-    getModLogger().info("%p", pauseUIInstance->spr_saber_fg);
-    getModLogger().info("%p", pauseUIInstance->spr_arrow);
-    bloqImage = GameObject::New_ctor(newcsstr("IFBloqImage"))->AddComponent<ImageView*>();
+	pauseUIInstance = UnityEngine::Resources::FindObjectsOfTypeAll<IForgor::PauseUIManager*>()[0];
+    bloqImage = UnityEngine::GameObject::New_ctor("IFBloqImage")->AddComponent<HMUI::ImageView*>();
 	bloqImage->get_transform()->SetParent(get_transform(), false);
-	bloqImage->get_rectTransform()->set_localScale(Vector3::get_one() * 0.075f);
-	bloqImage->get_rectTransform()->set_localPosition(Vector3::get_zero());
+	bloqImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one() * 0.075f);
+	bloqImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3::get_zero());
 	bloqImage->set_sprite(pauseUIInstance->spr_bloq);
-	bloqImage->set_type(Image::Type::Simple);
-	bloqImage->set_color(Color::get_red());
+	bloqImage->set_type(UnityEngine::UI::Image::Type::Simple);
+	bloqImage->set_color(UnityEngine::Color::get_red());
 	bloqImage->set_material(pauseUIInstance->mat_UINoGlow);
-	directionImage = GameObject::New_ctor(newcsstr("IFDirectionImage"))->AddComponent<ImageView*>();
+	directionImage = UnityEngine::GameObject::New_ctor("IFDirectionImage")->AddComponent<HMUI::ImageView*>();
 	directionImage->get_transform()->SetParent(bloqImage->get_transform(), false);
-	directionImage->get_rectTransform()->set_localScale(Vector3::get_one());
-	directionImage->get_rectTransform()->set_localPosition(Vector3::get_zero());
+	directionImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one());
+	directionImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3::get_zero());
 	directionImage->set_sprite(pauseUIInstance->spr_dot);
-	directionImage->set_type(Image::Type::Simple);
-	directionImage->set_color(Color::get_white());
+	directionImage->set_type(UnityEngine::UI::Image::Type::Simple);
+	directionImage->set_color(UnityEngine::Color::get_white());
 	directionImage->set_material(pauseUIInstance->mat_UINoGlow);
-	cutAngleImage = GameObject::New_ctor(newcsstr("IFCutAngleImage"))->AddComponent<ImageView*>();
+	cutAngleImage = UnityEngine::GameObject::New_ctor("IFCutAngleImage")->AddComponent<HMUI::ImageView*>();
 	cutAngleImage->get_transform()->SetParent(bloqImage->get_transform(), false);
-	cutAngleImage->get_rectTransform()->set_localScale(Vector3::get_one() * 1.2f);
-	cutAngleImage->get_rectTransform()->set_localPosition(Vector3::get_zero());
+	cutAngleImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one() * 1.2f);
+	cutAngleImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3::get_zero());
 	cutAngleImage->set_sprite(pauseUIInstance->spr_cut_arrow);
-	cutAngleImage->set_type(Image::Type::Simple);
-	cutAngleImage->set_color(Color(1.0f, 1.0f, 1.0f, 0.75f));
+	cutAngleImage->set_type(UnityEngine::UI::Image::Type::Simple);
+	cutAngleImage->set_color(UnityEngine::Color(1.0f, 1.0f, 1.0f, 0.75f));
 	cutAngleImage->set_material(pauseUIInstance->mat_UINoGlow);
 	cutAngleImage->set_enabled(false);
-	saberBgImage = GameObject::New_ctor(newcsstr("IFSaberBGImage"))->AddComponent<ImageView*>();
+	saberBgImage = UnityEngine::GameObject::New_ctor("IFSaberBGImage")->AddComponent<HMUI::ImageView*>();
 	saberBgImage->get_transform()->SetParent(get_transform(), false);
-	saberBgImage->get_rectTransform()->set_localScale(Vector3::get_one() * 0.075f);
-	saberBgImage->get_rectTransform()->set_localPosition(Vector3(0.0f, 10.0f, 0.0f));
+	saberBgImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one() * 0.075f);
+	saberBgImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3(0.0f, 10.0f, 0.0f));
 	saberBgImage->set_sprite(pauseUIInstance->spr_saber_bg);
-	saberBgImage->set_type(Image::Type::Simple);
-	saberBgImage->set_color(Color::get_white());
+	saberBgImage->set_type(UnityEngine::UI::Image::Type::Simple);
+	saberBgImage->set_color(UnityEngine::Color::get_white());
 	saberBgImage->set_material(pauseUIInstance->mat_UINoGlow);
-	saberFgImage = GameObject::New_ctor(newcsstr("IFSaberFGImage"))->AddComponent<ImageView*>();
+	saberFgImage = UnityEngine::GameObject::New_ctor("IFSaberFGImage")->AddComponent<HMUI::ImageView*>();
 	saberFgImage->get_transform()->SetParent(saberBgImage->get_transform(), false);
-	saberFgImage->get_rectTransform()->set_localScale(Vector3::get_one());
-	saberFgImage->get_rectTransform()->set_localPosition(Vector3::get_zero());
+	saberFgImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one());
+	saberFgImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3::get_zero());
 	saberFgImage->set_sprite(pauseUIInstance->spr_saber_fg);
-	saberFgImage->set_type(Image::Type::Simple);
-	saberFgImage->set_color(Color::get_white());
+	saberFgImage->set_type(UnityEngine::UI::Image::Type::Simple);
+	saberFgImage->set_color(UnityEngine::Color::get_white());
 	saberFgImage->set_material(pauseUIInstance->mat_UINoGlow);
 }
 
@@ -76,35 +65,35 @@ void IForgor::UIGroup::SetNoteData(GlobalNamespace::NoteData* noteData, void* ye
 	directionImage->set_sprite(pauseUIInstance->spr_arrow);
 	bloqImage->set_sprite(pauseUIInstance->spr_bloq);
 
-	RectTransform* bloqRootTransform = bloqImage->get_rectTransform();
+	auto bloqRootTransform = bloqImage->get_rectTransform();
 	switch (noteData->cutDirection) {
-		case NoteCutDirection::Down:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 0.0f)));
+		case GlobalNamespace::NoteCutDirection::Down:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 0.0f)));
 			break;
-		case NoteCutDirection::Up:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 180.0f)));
+		case GlobalNamespace::NoteCutDirection::Up:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 180.0f)));
 			break;
-		case NoteCutDirection::Left:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 270.0f)));
+		case GlobalNamespace::NoteCutDirection::Left:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 270.0f)));
 			break;
-		case NoteCutDirection::Right:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 90.0f)));
+		case GlobalNamespace::NoteCutDirection::Right:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 90.0f)));
 			break;
-		case NoteCutDirection::DownLeft:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 315.0f)));
+		case GlobalNamespace::NoteCutDirection::DownLeft:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 315.0f)));
 			break;
-		case NoteCutDirection::DownRight:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 45.0f)));
+		case GlobalNamespace::NoteCutDirection::DownRight:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 45.0f)));
 			break;
-		case NoteCutDirection::UpLeft:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 225.0f)));
+		case GlobalNamespace::NoteCutDirection::UpLeft:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 225.0f)));
 			break;
-		case NoteCutDirection::UpRight:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, 135.0f)));
+		case GlobalNamespace::NoteCutDirection::UpRight:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 135.0f)));
 			break;
-		case NoteCutDirection::Any:
-			bloqRootTransform->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, noteData->cutDirectionAngleOffset)));
-			if (noteData->gameplayType == NoteData::GameplayType::BurstSliderElement)
+		case GlobalNamespace::NoteCutDirection::Any:
+			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, noteData->cutDirectionAngleOffset)));
+			if (noteData->gameplayType == GlobalNamespace::NoteData::GameplayType::BurstSliderElement)
 			{
 				bloqImage->set_sprite(pauseUIInstance->spr_slider_bloq);
 				directionImage->set_sprite(pauseUIInstance->spr_slider_dot);
@@ -122,10 +111,10 @@ void IForgor::UIGroup::SetNoteCutInfo(GlobalNamespace::NoteCutInfo noteCutInfo)
 	this->noteCutInfo = noteCutInfo;
 	if (noteCutInfo.get_allIsOK()) {
 		// Maffs from SliceVisualizer bc I cant even pass calc 2 (https://github.com/m1el/BeatSaber-SliceVisualizer/blob/master/Core/NsvSlicedBlock.cs)
-		Vector3 cutDirection = Vector3(-noteCutInfo.cutNormal.y, noteCutInfo.cutNormal.x, 0.0f);
-		float cutAngle = Mathf::Atan2(cutDirection.y, cutDirection.x) *  57.29578f + 270.0f;
+		auto cutDirection = UnityEngine::Vector3(-noteCutInfo.cutNormal.y, noteCutInfo.cutNormal.x, 0.0f);
+		float cutAngle = UnityEngine::Mathf::Atan2(cutDirection.y, cutDirection.x) *  57.29578f + 270.0f;
 		cutAngleImage->set_enabled(true);
-		cutAngleImage->get_rectTransform()->set_rotation(Quaternion::Euler(Vector3(0.0f, 0.0f, cutAngle)));
+		cutAngleImage->get_rectTransform()->set_rotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, cutAngle)));
 	} else {
 		cutAngleImage->set_enabled(false);
 	}	
@@ -133,11 +122,11 @@ void IForgor::UIGroup::SetNoteCutInfo(GlobalNamespace::NoteCutInfo noteCutInfo)
 
 void IForgor::UIGroup::SetSaberAngle(float angle)
 {
-	saberBgImage->get_rectTransform()->set_localRotation(Quaternion::Euler(Vector3(0.0f, 0.0f, angle - 90.0f)));
+	saberBgImage->get_rectTransform()->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, angle - 90.0f)));
 }
 void IForgor::UIGroup::SetSaberXPosition(float xpos)
 {
-	saberBgImage->get_rectTransform()->set_localPosition(Vector3(xpos, 0.0f, 0.0f));
+	saberBgImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3(xpos, 0.0f, 0.0f));
 }
 
 void IForgor::UIGroup::SetNoteColor(UnityEngine::Color color)

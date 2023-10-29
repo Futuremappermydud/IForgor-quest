@@ -1,9 +1,6 @@
 #include "CustomTypes/NoteRecorder.hpp"
 #include "UnityEngine/Resources.hpp"
 
-using namespace GlobalNamespace;
-using namespace UnityEngine;
-
 DEFINE_TYPE(IForgor, NoteRecorder);
 
 void IForgor::NoteRecorder::Start() 
@@ -14,7 +11,7 @@ void IForgor::NoteRecorder::Start()
 
 void IForgor::NoteRecorder::OnNoteWasCut(GlobalNamespace::NoteData* noteData, GlobalNamespace::NoteCutInfo noteCutInfo) 
 {
-	if (noteData == nullptr || noteData->colorType == ColorType::None) return;
+	if (noteData == nullptr || noteData->colorType == GlobalNamespace::ColorType::None) return;
 	if (!noteCutInfo.saberTypeOK)
 	{
 		ProcessNote(noteData, nullptr);
@@ -31,12 +28,12 @@ void IForgor::NoteRecorder::OnNoteWasMissed(GlobalNamespace::NoteData* noteData)
 }
 void IForgor::NoteRecorder::ProcessNote(GlobalNamespace::NoteData* noteData, GlobalNamespace::NoteCutInfo noteCutInfo) 
 {
-    if (noteData->colorType == ColorType::ColorA)
+    if (noteData->colorType == GlobalNamespace::ColorType::ColorA)
 	{
 		noteAData = noteData;
 		noteACutInfo = noteCutInfo;
 	}
-	else if (noteData->colorType == ColorType::ColorB)
+	else if (noteData->colorType == GlobalNamespace::ColorType::ColorB)
 	{
 		noteBData = noteData;
 		noteBCutInfo = noteCutInfo;

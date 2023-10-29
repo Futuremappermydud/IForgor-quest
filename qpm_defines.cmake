@@ -5,7 +5,7 @@ set(MOD_VERSION "1.0.0")
 set(MOD_ID "IForgor")
 
 # derived from override .so name or just id_version
-set(COMPILE_ID "snowy")
+set(COMPILE_ID "iforgor")
 # derived from whichever codegen package is installed, will default to just codegen
 set(CODEGEN_ID "codegen")
 

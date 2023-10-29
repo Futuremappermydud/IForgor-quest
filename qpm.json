@@ -7,7 +7,7 @@
     "version": "1.0.0",
     "url": null,
     "additionalData": {
-      "overrideSoName": "libsnowy.so",
+      "overrideSoName": "libiforgor.so",
       "cmake": true
     }
   },
@@ -44,6 +44,16 @@
     {
       "id": "custom-types",
       "versionRange": "=0.15.24",
+      "additionalData": {}
+    },
+    {
+      "id": "chroma",
+      "versionRange": "^2.8.0",
+      "additionalData": {}
+    },
+    {
+      "id": "conditional-dependencies",
+      "versionRange": "^0.1.0",
       "additionalData": {}
     }
   ],
