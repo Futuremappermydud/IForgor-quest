@@ -6,7 +6,8 @@
 #include "UnityEngine/GameObject.hpp"
 #include "UnityEngine/UI/Image.hpp"
 #include "HMUI/ImageView.hpp"
-#include "main.hpp"
+#include "UnityEngine/GameObject.hpp"
+#include "UnityEngine/Mathf.hpp"
 
 
 DEFINE_TYPE(IForgor, UIGroup);
@@ -16,7 +17,7 @@ void IForgor::UIGroup::Initialize()
 	pauseUIInstance = UnityEngine::Resources::FindObjectsOfTypeAll<IForgor::PauseUIManager*>()[0];
     bloqImage = UnityEngine::GameObject::New_ctor("IFBloqImage")->AddComponent<HMUI::ImageView*>();
 	bloqImage->get_transform()->SetParent(get_transform(), false);
-	bloqImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one() * 0.075f);
+	bloqImage->get_rectTransform()->set_localScale({0.075f, 0.075f, 0.075f});
 	bloqImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3::get_zero());
 	bloqImage->set_sprite(pauseUIInstance->spr_bloq);
 	bloqImage->set_type(UnityEngine::UI::Image::Type::Simple);
@@ -32,7 +33,7 @@ void IForgor::UIGroup::Initialize()
 	directionImage->set_material(pauseUIInstance->mat_UINoGlow);
 	cutAngleImage = UnityEngine::GameObject::New_ctor("IFCutAngleImage")->AddComponent<HMUI::ImageView*>();
 	cutAngleImage->get_transform()->SetParent(bloqImage->get_transform(), false);
-	cutAngleImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one() * 1.2f);
+	cutAngleImage->get_rectTransform()->set_localScale({1.2f, 1.2f, 1.2f});
 	cutAngleImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3::get_zero());
 	cutAngleImage->set_sprite(pauseUIInstance->spr_cut_arrow);
 	cutAngleImage->set_type(UnityEngine::UI::Image::Type::Simple);
@@ -41,7 +42,7 @@ void IForgor::UIGroup::Initialize()
 	cutAngleImage->set_enabled(false);
 	saberBgImage = UnityEngine::GameObject::New_ctor("IFSaberBGImage")->AddComponent<HMUI::ImageView*>();
 	saberBgImage->get_transform()->SetParent(get_transform(), false);
-	saberBgImage->get_rectTransform()->set_localScale(UnityEngine::Vector3::get_one() * 0.075f);
+	saberBgImage->get_rectTransform()->set_localScale({0.075f, 0.075f, 0.075f});
 	saberBgImage->get_rectTransform()->set_localPosition(UnityEngine::Vector3(0.0f, 10.0f, 0.0f));
 	saberBgImage->set_sprite(pauseUIInstance->spr_saber_bg);
 	saberBgImage->set_type(UnityEngine::UI::Image::Type::Simple);
@@ -91,6 +92,7 @@ void IForgor::UIGroup::SetNoteData(GlobalNamespace::NoteData* noteData, void* ye
 		case GlobalNamespace::NoteCutDirection::UpRight:
 			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, 135.0f)));
 			break;
+		case GlobalNamespace::NoteCutDirection::None: //??
 		case GlobalNamespace::NoteCutDirection::Any:
 			bloqRootTransform->set_localRotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, noteData->cutDirectionAngleOffset)));
 			if (noteData->gameplayType == GlobalNamespace::NoteData::GameplayType::BurstSliderElement)
@@ -106,12 +108,12 @@ void IForgor::UIGroup::SetNoteData(GlobalNamespace::NoteData* noteData, void* ye
 	}
 }
 
-void IForgor::UIGroup::SetNoteCutInfo(GlobalNamespace::NoteCutInfo noteCutInfo)
+void IForgor::UIGroup::SetNoteCutInfo(std::optional<GlobalNamespace::NoteCutInfo> noteCutInfo)
 {
 	this->noteCutInfo = noteCutInfo;
-	if (noteCutInfo.get_allIsOK()) {
+	if (noteCutInfo.has_value() && noteCutInfo.value().get_allIsOK()) {
 		// Maffs from SliceVisualizer bc I cant even pass calc 2 (https://github.com/m1el/BeatSaber-SliceVisualizer/blob/master/Core/NsvSlicedBlock.cs)
-		auto cutDirection = UnityEngine::Vector3(-noteCutInfo.cutNormal.y, noteCutInfo.cutNormal.x, 0.0f);
+		auto cutDirection = UnityEngine::Vector3(-noteCutInfo.value().cutNormal.y, noteCutInfo.value().cutNormal.x, 0.0f);
 		float cutAngle = UnityEngine::Mathf::Atan2(cutDirection.y, cutDirection.x) *  57.29578f + 270.0f;
 		cutAngleImage->set_enabled(true);
 		cutAngleImage->get_rectTransform()->set_rotation(UnityEngine::Quaternion::Euler(UnityEngine::Vector3(0.0f, 0.0f, cutAngle)));

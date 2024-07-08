@@ -1,4 +1,6 @@
 #include "CustomTypes/PauseUIManager.hpp"
+#include "CustomTypes/NoteRecorder.hpp"
+#include "CustomTypes/SaberRecorder.hpp"
 #include "UnityEngine/RectTransform.hpp"
 #include "UnityEngine/Resources.hpp"
 #include "UnityEngine/GameObject.hpp"
@@ -8,7 +10,9 @@
 #include "GlobalNamespace/GameplayCoreInstaller.hpp"
 #include "GlobalNamespace/GameplayCoreSceneSetupData.hpp"
 #include "HMUI/ImageView.hpp"
-#include "questui/shared/BeatSaberUI.hpp"
+#include "bsml/shared/Helpers/utilities.hpp"
+#include "bsml/shared/BSML.hpp"
+#include "bsml/shared/BSML-Lite.hpp"
 #include "assets.hpp"
 #ifdef CHROMA
 #include "conditional-dependencies/shared/main.hpp"
@@ -25,16 +29,16 @@ void IForgor::PauseUIManager::OnEnable()
 
 void IForgor::PauseUIManager::CreateUIElements()
 {
-	spr_bloq = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::bloq_png);
-	spr_slider_bloq = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::slider_png);
-	spr_arrow = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::arrow_png);
-	spr_dot = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::dot_png);
-	spr_slider_dot = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::slider_dots_png);
-	spr_cut_arrow = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::cut_arrow_png);
-	spr_saber_bg = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::saber_bg_png);
-	spr_saber_fg = QuestUI::BeatSaberUI::ArrayToSprite(IncludedAssets::saber_fg_png);
+	spr_bloq = BSML::Utilities::LoadSpriteRaw(Assets::bloq_png);
+	spr_slider_bloq = BSML::Utilities::LoadSpriteRaw(Assets::slider_png);
+	spr_arrow = BSML::Utilities::LoadSpriteRaw(Assets::arrow_png);
+	spr_dot = BSML::Utilities::LoadSpriteRaw(Assets::dot_png);
+	spr_slider_dot = BSML::Utilities::LoadSpriteRaw(Assets::slider_dots_png);
+	spr_cut_arrow = BSML::Utilities::LoadSpriteRaw(Assets::cut_arrow_png);
+	spr_saber_bg = BSML::Utilities::LoadSpriteRaw(Assets::saber_bg_png);
+	spr_saber_fg = BSML::Utilities::LoadSpriteRaw(Assets::saber_fg_png);
 	if (_colorScheme == nullptr)
-		_colorScheme = UnityEngine::Resources::FindObjectsOfTypeAll<GlobalNamespace::GameplayCoreInstaller*>()[0]->sceneSetupData->colorScheme;
+		_colorScheme = UnityEngine::Resources::FindObjectsOfTypeAll<GlobalNamespace::GameplayCoreInstaller*>()[0]->____sceneSetupData->colorScheme;
     if (_pauseCanvasTransform == nullptr)
 	{
 		auto manager = UnityEngine::Resources::FindObjectsOfTypeAll<GlobalNamespace::PauseMenuManager*>()[0];
@@ -42,7 +46,7 @@ void IForgor::PauseUIManager::CreateUIElements()
 	}
 
 	UnityEngine::Sprite* spr_RoundRect10 = _pauseCanvasTransform->Find("MainBar")->Find("LevelBarSimple")->Find("BG")->GetComponent<HMUI::ImageView*>()->get_sprite();
-	mat_UINoGlow = QuestUI::ArrayUtil::First(UnityEngine::Resources::FindObjectsOfTypeAll<UnityEngine::Material*>(), [](UnityEngine::Material* x) { return x->get_name() == "UINoGlow"; });
+	mat_UINoGlow = UnityEngine::Resources::FindObjectsOfTypeAll<UnityEngine::Material*>()->First([](UnityEngine::Material* x) { return x->get_name() == "UINoGlow"; });
 	UnityEngine::RectTransform* uiContainer = UnityEngine::GameObject::New_ctor("IFUIContainer")->AddComponent<UnityEngine::RectTransform*>();
 	uiContainer->SetParent(_pauseCanvasTransform, false);
 	uiContainer->set_localScale(UnityEngine::Vector3::get_one());
@@ -58,7 +62,7 @@ void IForgor::PauseUIManager::CreateUIElements()
 	background->set_type(UnityEngine::UI::Image::Type::Sliced);
 	background->set_color(UnityEngine::Color(0.125f, 0.125f, 0.125f, 0.75f));
 	background->set_material(mat_UINoGlow);
-    background->skew = 0.18f;
+    background->____skew = 0.18f;
 	background->SetAllDirty();
 
 	groupA = UnityEngine::GameObject::New_ctor("IFUIBloq_TypeA")->AddComponent<UIGroup*>();

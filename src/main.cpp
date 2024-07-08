@@ -9,13 +9,6 @@
 #include "GlobalNamespace/GamePause.hpp"
 #include "custom-types/shared/coroutine.hpp"
 
-static ModInfo modInfo;
-
-Logger& getLogger() {
-    static Logger* logger = new Logger(modInfo);
-    return *logger;
-}
-
 MAKE_HOOK_MATCH(GameSongController_StartSong, &GlobalNamespace::GameSongController::StartSong, void, GlobalNamespace::GameSongController* self, float songTimeOffset) {
     GameSongController_StartSong(self, songTimeOffset);
     
@@ -48,20 +41,20 @@ MAKE_HOOK_MATCH(GamePause_Pause, &GlobalNamespace::GamePause::Pause, void, Globa
     pauseUIInstance->OnPause();
 }
 
-extern "C" void setup(ModInfo& info) {
-    info.id = MOD_ID;
-    info.version = VERSION;
-    modInfo = info;
+extern "C" __attribute__((visibility("default"))) void setup(CModInfo* info) {
+  info->id =MOD_ID;
+  info->version = VERSION;
+  info->version_long = 0;
 }
 
-extern "C" void load() {
+extern "C" __attribute__((visibility("default"))) void late_load() {
     il2cpp_functions::Init();
 
-    INSTALL_HOOK(getLogger(), GameSongController_StartSong);
-    INSTALL_HOOK(getLogger(), ScoreController_HandleNoteWasCut);
-    INSTALL_HOOK(getLogger(), ScoreController_HandleNoteWasMissed);
-    INSTALL_HOOK(getLogger(), GamePause_Resume);
-    INSTALL_HOOK(getLogger(), GamePause_Pause);
+    INSTALL_HOOK(IForgor::Logger, GameSongController_StartSong);
+    INSTALL_HOOK(IForgor::Logger, ScoreController_HandleNoteWasCut);
+    INSTALL_HOOK(IForgor::Logger, ScoreController_HandleNoteWasMissed);
+    INSTALL_HOOK(IForgor::Logger, GamePause_Resume);
+    INSTALL_HOOK(IForgor::Logger, GamePause_Pause);
 
     custom_types::Register::AutoRegister();
 }

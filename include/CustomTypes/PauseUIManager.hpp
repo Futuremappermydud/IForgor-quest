@@ -1,6 +1,5 @@
 #pragma once
 
-#include "main.hpp"
 #include "custom-types/shared/macros.hpp"
 #include "UnityEngine/MonoBehaviour.hpp"
 #include "UnityEngine/Transform.hpp"

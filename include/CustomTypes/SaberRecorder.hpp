@@ -1,9 +1,7 @@
 #pragma once
 
-#include "main.hpp"
 #include "custom-types/shared/macros.hpp"
 #include "UnityEngine/MonoBehaviour.hpp"
-#include "UnityEngine/Mathf.hpp"
 #include "GlobalNamespace/Saber.hpp"
 
 DECLARE_CLASS_CODEGEN(IForgor, SaberRecorder, UnityEngine::MonoBehaviour,

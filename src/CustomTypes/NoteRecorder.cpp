@@ -14,7 +14,7 @@ void IForgor::NoteRecorder::OnNoteWasCut(GlobalNamespace::NoteData* noteData, Gl
 	if (noteData == nullptr || noteData->colorType == GlobalNamespace::ColorType::None) return;
 	if (!noteCutInfo.saberTypeOK)
 	{
-		ProcessNote(noteData, nullptr);
+		ProcessNote(noteData, std::nullopt);
 	}
 	else
 	{
@@ -26,7 +26,7 @@ void IForgor::NoteRecorder::OnNoteWasMissed(GlobalNamespace::NoteData* noteData)
 {
     ProcessNote(noteData, GlobalNamespace::NoteCutInfo());
 }
-void IForgor::NoteRecorder::ProcessNote(GlobalNamespace::NoteData* noteData, GlobalNamespace::NoteCutInfo noteCutInfo) 
+void IForgor::NoteRecorder::ProcessNote(GlobalNamespace::NoteData* noteData, std::optional<GlobalNamespace::NoteCutInfo> noteCutInfo) 
 {
     if (noteData->colorType == GlobalNamespace::ColorType::ColorA)
 	{

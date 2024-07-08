@@ -1,25 +1,35 @@
 {
+  "version": "0.1.0",
   "sharedDir": "shared",
   "dependenciesDir": "extern",
   "info": {
     "name": "IForgor",
     "id": "iforgor",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "url": null,
     "additionalData": {
       "overrideSoName": "libiforgor.so",
       "cmake": true
     }
   },
+  "workspace": {
+    "scripts": {
+      "build": ["pwsh ./scripts/build.ps1"]
+    },
+    "qmodIncludeDirs": ["./build", "./extern/libs"],
+    "qmodOutput": "IForgor.qmod"
+  },
   "dependencies": [
     {
-      "id": "modloader",
-      "versionRange": "=1.2.3",
-      "additionalData": {}
+      "id": "scotland2",
+      "versionRange": "*",
+      "additionalData": {
+        "includeQmod": false
+      }
     },
     {
       "id": "beatsaber-hook",
-      "versionRange": "^3.8.0",
+      "versionRange": "^5.1.0",
       "additionalData": {
         "extraFiles": [
           "src/inline-hook"
@@ -27,35 +37,34 @@
       }
     },
     {
-      "id": "codegen",
-      "versionRange": "^0.33.0",
-      "additionalData": {}
-    },
-    {
-      "id": "questui",
-      "versionRange": "^0.17.12",
+      "id": "bs-cordl",
+      "versionRange": "^3700.0.0",
       "additionalData": {}
     },
     {
       "id": "sombrero",
-      "versionRange": "^0.1.37",
+      "versionRange": "*",
       "additionalData": {}
     },
     {
       "id": "custom-types",
-      "versionRange": "=0.15.24",
+      "versionRange": "^0.17.0",
       "additionalData": {}
     },
     {
-      "id": "chroma",
-      "versionRange": "^2.8.0",
+      "id": "kaleb",
+      "versionRange": "^0.1.9",
       "additionalData": {}
     },
     {
-      "id": "conditional-dependencies",
-      "versionRange": "^0.1.0",
+      "id": "bsml",
+      "versionRange": "^0.4.42",
+      "additionalData": {}
+    },
+    {
+      "id": "paper",
+      "versionRange": "^3.6.3",
       "additionalData": {}
     }
-  ],
-  "additionalData": {}
+  ]
 }
