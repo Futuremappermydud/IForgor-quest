@@ -13,12 +13,12 @@
     {
       "version": "^0.17.0",
       "id": "custom-types",
-      "downloadIfMissing": "https://github.com/QuestPackageManager/Il2CppQuestTypePatching/releases/download/v0.17.8/CustomTypes.qmod"
+      "downloadIfMissing": "https://github.com/QuestPackageManager/Il2CppQuestTypePatching/releases/download/v0.17.10/CustomTypes.qmod"
     },
     {
       "version": "^0.4.42",
       "id": "bsml",
-      "downloadIfMissing": "https://github.com/RedBrumbler/Quest-BSML/releases/download/v0.4.42/BSML.qmod"
+      "downloadIfMissing": "https://github.com/RedBrumbler/Quest-BSML/releases/download/v0.4.43/BSML.qmod"
     },
     {
       "version": "^3.6.3",
@@ -31,7 +31,7 @@
     "libiforgor.so"
   ],
   "libraryFiles": [
-    "libbeatsaber-hook_5_1_7.so"
+    "libbeatsaber-hook_5_1_9.so"
   ],
   "fileCopies": [],
   "copyExtensions": []
