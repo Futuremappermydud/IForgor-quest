@@ -114,7 +114,7 @@ jobs:
         # TODO: Make this work!
         continue-on-error: true
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{secrets.PUBLISH_TOKEN}}
           # first asset URL
           qmod_url: ${{ fromJSON(steps.upload_file_release.outputs.assets)[0].browser_download_url }}
           qmod_repo_owner: 'dantheman827'
