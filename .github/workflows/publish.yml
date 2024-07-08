@@ -51,6 +51,27 @@ jobs:
           echo ::set-output name=TAG::${GITHUB_REF#refs/tags/}
           echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
 
+      - name: QPM Rust Action
+        uses: Fernthedev/qpm-rust-action@main
+        with:
+          #required
+          workflow_token: ${{secrets.GITHUB_TOKEN}}
+
+          restore: true # will run restore on download
+          cache: true #will cache dependencies
+
+          publish: false
+
+          version: ${{ steps.get_tag_version.outputs.VERSION }}
+          tag: ${{ steps.get_tag_version.outputs.TAG }}
+
+          # set to true if applicable, ASSUMES the file is already a release asset
+          qpm_release_bin: true
+          qpm_debug_bin: true
+
+          # Name of qmod in release asset. Assumes exists, same as prior
+          qpm_qmod: ${{env.qmodName}}.qmod
+
       - name: Build
         run: |
           cd ${GITHUB_WORKSPACE}
