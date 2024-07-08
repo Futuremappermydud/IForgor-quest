@@ -10,10 +10,7 @@ on:
     tags:
       - 'v*'
 
-permissions:
-  pull-requests: write
-  contents: write
-  repository-projects: write # add permission for forking
+permissions: write-all
 
 jobs:
   publish:
